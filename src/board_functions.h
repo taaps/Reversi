@@ -16,4 +16,7 @@ bool checkLegalInDirection(int n, char board[26][26], char humanRowInput, char h
 // If a specific direction from a colourOfPlayer piece is valid for tiles to change, this function will change the tiles to colourOfPlayer
 void changeTilesOnBoard(int n, char board[26][26], int numRow, int numCol, char colourOfPlayer, int deltaRow, int deltaCol);
 
+// Finds where the colourOfPlayer is located on the board and calls the changeTilesOnBoard function
+void findTilePositionAndChange(int n, char board[26][26], char colourOfPlayer, int row, int col);
+
 #endif

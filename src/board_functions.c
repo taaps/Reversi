@@ -127,3 +127,23 @@ void changeTilesOnBoard(int n, char board[26][26], int numRow, int numCol, char 
 		} while (board[initialRow][initialCol] != colourOfPlayer);
 	}
 }
+
+// Finds where the colourOfPlayer is located on the board and calls the changeTilesOnBoard function
+void findTilePositionAndChange(int n, char board[26][26], char colourOfPlayer, int row, int col)
+{
+	int deltaRow = -1;
+	int deltaCol = -1;
+	
+	int i;
+	int j;
+	for (i=-1; i<=1; i++)
+	{
+		for (j=-1; j<=1; j++)
+		{
+			changeTilesOnBoard(n, board, row, col, colourOfPlayer, deltaRow, deltaCol);
+			deltaCol++;
+		}
+		deltaCol = -1;
+		deltaRow++;
+	}
+}
