@@ -36,3 +36,11 @@ void printBoard(int n, char board[26][26])
 	}
 }
 
+// Switches the player that is playing
+void switchPlayerPlaying(int *playerPlaying, int *playerSitting)
+{
+	int numberToSwitch = 0;
+	numberToSwitch = *playerPlaying;
+	*playerPlaying = *playerSitting;
+	*playerSitting = numberToSwitch;
+}
