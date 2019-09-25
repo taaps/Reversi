@@ -45,3 +45,20 @@ bool isDirectionAValidMove(int n, char board[26][26], int numRow, int numCol, ch
 	}
 	return returnValue;
 }
+
+// Finds value of position at corner, side or in the middle
+int cornerSideMiddle(int n, int numRow, int numCol)
+{
+	int valueOfPosition=1;
+	
+	if (((numRow == 0) && (numCol == 0))||((numRow == 0) && (numCol == (n-1))) ||((numRow == (n-1) && (numCol == 0))) ||(numRow == (n-1) && (numCol == (n-1))))
+	{
+		valueOfPosition = 3;
+	}
+	else if ((numRow == 0) || (numCol == 0) || (numRow == (n-1)) || (numCol == (n-1)))
+	{
+		valueOfPosition = 2;
+	}
+	
+	return valueOfPosition;
+}
