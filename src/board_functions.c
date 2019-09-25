@@ -176,3 +176,40 @@ bool isBoardFull(int n, char board[26][26])
 				return false;
 	return true;
 }
+
+// True if has moves, false if doesn't have any moves
+bool doesPlayerHaveAvailableMove(int n, char board[26][26], char colour)
+{
+	int deltaRow = -1;
+	int deltaCol = -1;
+	bool returnValue = false;
+	
+	int i;
+	int j;
+	int a;
+	int b;
+	for (i=0; i<n; i++)
+	{
+		for (j=0; j<n; j++)
+		{
+			if (board[i][j] == colour)
+			{
+				for (a=-1; a<=1; a++)
+				{
+					for (b=-1; b<=1; b++)
+					{
+						if (isDirectionAValidMove(n, board, i, j, colour, deltaRow, deltaCol) == true)
+							returnValue = true;
+						deltaCol++;
+					}
+					deltaCol = -1;
+					deltaRow++;
+				}
+			}
+			deltaCol = -1;
+			deltaRow = -1;
+		}
+	}
+	
+	return returnValue;
+}

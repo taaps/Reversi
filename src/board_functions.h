@@ -28,4 +28,7 @@ void findTilePositionAndChange(int n, char board[26][26], char colourOfPlayer, i
 // Checks whether the board is full or not
 bool isBoardFull(int n, char board[26][26]);
 
+// True if has moves, false if doesn't have any moves
+bool doesPlayerHaveAvailableMove(int n, char board[26][26], char colour);
+
 #endif
