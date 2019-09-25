@@ -1,6 +1,12 @@
 #ifndef _BOARD_FUNCTIONS_
 #define _BOARD_FUNCTIONS_
 
+// Change char to a number
+int changeCharToNumber(char a);
+
+// Change number to a char 
+char changeNumberToChar(int n);
+
 // Function prints the board contents
 void printBoard(int n, char board[26][26]);
 

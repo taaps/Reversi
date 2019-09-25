@@ -2,6 +2,23 @@
 #include <stdbool.h>
 #include "board_functions.h"
 
+
+// Change char to a number
+int changeCharToNumber(char a)
+{
+	int num;
+	num = a - 97;
+	return num;
+}
+
+// Change number to a char 
+char changeNumberToChar(int n)
+{
+	char letter;
+	letter = n + 97;
+	return letter;
+}
+
 // Function prints the board contents
 void printBoard(int n, char board[26][26])
 {
