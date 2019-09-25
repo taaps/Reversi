@@ -19,4 +19,7 @@ void changeTilesOnBoard(int n, char board[26][26], int numRow, int numCol, char 
 // Finds where the colourOfPlayer is located on the board and calls the changeTilesOnBoard function
 void findTilePositionAndChange(int n, char board[26][26], char colourOfPlayer, int row, int col);
 
+// Checks whether the board is full or not
+bool isBoardFull(int n, char board[26][26]);
+
 #endif

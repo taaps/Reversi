@@ -147,3 +147,15 @@ void findTilePositionAndChange(int n, char board[26][26], char colourOfPlayer, i
 		deltaRow++;
 	}
 }
+
+// Checks whether the board is full or not
+bool isBoardFull(int n, char board[26][26])
+{
+	int i;
+	int j;
+	for (i=0; i<n; i++)
+		for (j=0; j<n; j++)
+			if (board[i][j] == 'U')
+				return false;
+	return true;
+}
