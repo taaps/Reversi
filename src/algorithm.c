@@ -126,7 +126,7 @@ double maximizeNumberOfMovesICanMake(int n, char board2[26][26], int row, int co
 	}
 	
 	//only call if opponent has a possible move for the next turn
-	//howManyMovesOpponentHas = opponentAlgorithm(n, board2, colourOfComputer);	//opponent places an educated move and returns how many possible moves it had
+	howManyMovesOpponentHas = opponentAlgorithm(n, board2, colourOfComputer);	//opponent places an educated move and returns how many possible moves it had
 	
 	if (howManyMovesOpponentHas == 0)
 	{
@@ -283,4 +283,154 @@ void computerAlgorithm(int n, char board[26][26], char colourOfComputer)
 	
 	printf("Computer places %c at %c%c.\n", colourOfComputer, changeNumberToChar(finalRow), changeNumberToChar(finalCol));
 
+}
+
+// Function simulates what move the opponent is likely to make based on what moved I made with my algorithm
+// Trying to figure out the best move I can make which will cause the opponent to have the worst move they can make
+int opponentAlgorithm(int n, char board2[26][26], char colourOfComputer)
+{
+	char colourOfOpponent;
+	char opponentPossibleMoves[26][26];
+	int numberOfMovesAvailableForOpponent = 0;
+	int howManyTilesFlippedForSpecificPosition[26][26];
+	int numberOfTilesFlipped = 0;
+	int valueOfPosition[26][26];
+	double finalMove[26][26];
+	
+	int i;
+	int j;
+	for (i=0; i<n; i++)
+	{
+		for (j=0; j<n; j++)
+		{
+			opponentPossibleMoves[i][j] = 'U';
+			howManyTilesFlippedForSpecificPosition[i][j] = 0;
+			valueOfPosition[i][j] = 0;
+			finalMove[i][j] = 0.0;
+		}
+	}
+	
+	if (colourOfComputer == 'W')
+	{
+		colourOfOpponent = 'B';
+	}
+	else
+	{
+		colourOfOpponent = 'W';
+	}
+	
+	int deltaRow = -1;
+	int deltaCol = -1;
+	//finds possible moves and saves them in 'opponentpossibleMoves' & finds value of position (corner, side, middle)
+	int a;
+	int b;
+	for (i=0; i<n; i++)
+	{
+		for (j=0; j<n; j++)
+		{
+			for (a=-1; a<=1; a++)
+			{
+				for (b=-1; b<=1; b++)
+				{
+					if (checkLegalInDirection(n, board2, changeNumberToChar(i), changeNumberToChar(j), colourOfOpponent, deltaRow, deltaCol) == true)
+					{
+						numberOfMovesAvailableForOpponent++;
+						opponentPossibleMoves[i][j] = colourOfOpponent;
+						valueOfPosition[i][j] = cornerSideMiddle(n, i, j);
+					}
+					deltaCol++;
+				}
+				deltaCol = -1;
+				deltaRow++;
+			}
+			deltaCol = -1;
+			deltaRow = -1;
+		}
+	}
+
+	// if opponent has no available moves
+	if (numberOfMovesAvailableForOpponent == 0)
+	{
+		return 0;
+	}
+
+	deltaRow = -1;
+	deltaCol = -1;
+	
+	//finds out how many tiles can be flipped if the opponent places a tile at a possibleMove location
+	for (i=0; i<n; i++)
+	{
+		for (j=0; j<n; j++)
+		{
+			if (opponentPossibleMoves[i][j] == colourOfOpponent)
+			{
+				for (a=-1; a<=1; a++)
+				{
+					for (b=-1; b<=1; b++)
+					{
+						numberOfTilesFlipped = howManyTilesCanBeFlipped(n, board2, i, j, colourOfOpponent, deltaRow, deltaCol);
+						howManyTilesFlippedForSpecificPosition[i][j] += numberOfTilesFlipped;
+						deltaCol++;
+					}
+					deltaCol = -1;
+					deltaRow++;
+				}
+			}
+			
+			deltaCol = -1;
+			deltaRow = -1;
+		}
+	}
+	
+	double calculatedValue = 0;
+	
+	for (i=0; i<n; i++)
+	{
+		for (j=0; j<n; j++)
+		{
+			if (opponentPossibleMoves[i][j] == colourOfOpponent)
+			{
+				calculatedValue = (valueOfPosition[i][j] * 0.7) + (howManyTilesFlippedForSpecificPosition[i][j] * 0.3);
+				finalMove[i][j] = calculatedValue;
+			}
+		}
+	}
+	
+	int rowToMove;
+	int colToMove;
+	double maxValue=0.0;
+	
+	//opponent finds where they should move (place that has the highest value on finalMove 2D array)
+	for (i=0; i<n; i++)
+	{
+		for (j=0; j<n; j++)
+		{
+			if (finalMove[i][j] > maxValue)
+			{
+				rowToMove = i;
+				colToMove = j;
+				maxValue = finalMove[i][j];
+			}
+		}
+	}
+	 
+	 //place opponent piece at highest value
+	 board2[rowToMove][colToMove] = colourOfOpponent;
+	 
+	 deltaRow = -1;
+	 deltaCol = -1;
+	 
+	 for (i=-1; i<=1; i++)
+	 {
+		 for (j=-1; j<=1; j++)
+		 {
+			 changeTilesOnBoard(n, board2, rowToMove, colToMove, colourOfOpponent, deltaRow, deltaCol);
+			 deltaCol++;
+		 }
+		 deltaCol = -1;
+		 deltaRow++;
+	 }
+	 
+	 return numberOfMovesAvailableForOpponent;	//returns how many moves opponent had
+	 
 }

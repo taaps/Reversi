@@ -22,4 +22,8 @@ double finalValue(int n, char board[26][26], int row, int col, char colourOfComp
 // Initial version of my own implemented algorithm
 void computerAlgorithm(int n, char board[26][26], char colourOfComputer);
 
+// Function simulates what move the opponent is likely to make based on what moved I made with my algorithm
+// Trying to figure out the best move I can make which will cause the opponent to have the worst move they can make
+int opponentAlgorithm(int n, char board2[26][26], char colourOfComputer);
+
 #endif
