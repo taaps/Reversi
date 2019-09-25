@@ -91,3 +91,39 @@ bool checkLegalInDirection(int n, char board[26][26], char humanRowInput, char h
 	
 	return isPositionLegal;
 }
+
+// If a specific direction from a colourOfPlayer piece is valid for tiles to change, this function will change the tiles to colourOfPlayer
+void changeTilesOnBoard(int n, char board[26][26], int numRow, int numCol, char colourOfPlayer, int deltaRow, int deltaCol)
+{
+	int initialRow = numRow;
+	int initialCol = numCol;
+	numRow -= deltaRow;
+	numCol += deltaCol;
+	bool checkIfDirectionIsValid = false;
+	
+	while((board[numRow][numCol] != colourOfPlayer) && (positionInBounds(n, numRow, numCol)) && (board[numRow][numCol] != 'U'))
+	{
+		numRow -= deltaRow;
+		numCol += deltaCol;
+		
+		if((board[numRow][numCol] == colourOfPlayer) && (positionInBounds(n, numRow, numCol)))
+		{
+			checkIfDirectionIsValid = true;
+			break;
+		}
+	}
+	
+	if (checkIfDirectionIsValid == true)
+	{
+		initialRow -= deltaRow;
+		initialCol += deltaCol;
+			
+		do
+		{
+			board[initialRow][initialCol] = colourOfPlayer;
+			initialRow -= deltaRow;
+			initialCol += deltaCol;
+			
+		} while (board[initialRow][initialCol] != colourOfPlayer);
+	}
+}

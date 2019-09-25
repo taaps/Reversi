@@ -13,4 +13,7 @@ bool positionInBounds(int n, int row, int col);
 // Checks if move entered by human is legal (returns true if legal, false if illegal)
 bool checkLegalInDirection(int n, char board[26][26], char humanRowInput, char humanColInput, char colourOfHuman, int deltaRow, int deltaCol);
 
+// If a specific direction from a colourOfPlayer piece is valid for tiles to change, this function will change the tiles to colourOfPlayer
+void changeTilesOnBoard(int n, char board[26][26], int numRow, int numCol, char colourOfPlayer, int deltaRow, int deltaCol);
+
 #endif
