@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include "board_functions.h"
 
 // Function prints the board contents
 void printBoard(int n, char board[26][26])
@@ -43,4 +44,16 @@ void switchPlayerPlaying(int *playerPlaying, int *playerSitting)
 	numberToSwitch = *playerPlaying;
 	*playerPlaying = *playerSitting;
 	*playerSitting = numberToSwitch;
+}
+
+// Checks whether the given row and column lies within the board 
+bool positionInBounds(int n, int row, int col)
+{
+	bool isPositionValid = false;
+	if ((row < n) && (col < n) && (row >=0) && (col >=0))
+	{
+		isPositionValid = true;
+	}
+
+	return isPositionValid;
 }
