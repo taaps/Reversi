@@ -10,4 +10,7 @@ void switchPlayerPlaying(int *playerPlaying, int *playerSitting);
 // Checks whether the given row and column lies within the board 
 bool positionInBounds(int n, int row, int col);
 
+// Checks if move entered by human is legal (returns true if legal, false if illegal)
+bool checkLegalInDirection(int n, char board[26][26], char humanRowInput, char humanColInput, char colourOfHuman, int deltaRow, int deltaCol);
+
 #endif
